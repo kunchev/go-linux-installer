@@ -12,6 +12,7 @@ Attributes:
 # pip3 -r install requirements.txt
 
 try:
+    import argparse
     import requests
     import httplib2
     from tqdm import tqdm
@@ -116,6 +117,10 @@ def get_go(url, location):
 def main():
     """Main function, entry point of program.
     """
+    parser = argparse.ArgumentParser(description='List available Go pakcages '
+                                                 'for Linux, install the '
+                                                 'selected package version.')
+    args = parser.parse_args()
     go_versions = get_go_versions(go_dl_base_url)
     go_links = get_go_links(go_dl_base_url)
 
