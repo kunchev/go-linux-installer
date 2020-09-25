@@ -116,7 +116,7 @@ def get_go(url, location):
     print(f'Download complete, file saved to {location + filename}')
 
 
-def main() -> object:
+def main():
     """Main function, entry point of program.
     """
     go_versions = get_go_versions(go_dl_base_url)
