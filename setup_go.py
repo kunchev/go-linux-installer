@@ -54,7 +54,7 @@ def get_go_versions(url):
     for link in BeautifulSoup(response, parse_only=SoupStrainer('a'), features="html.parser"):
         if link.has_attr('href'):
             if 'linux-amd64' in link['href']:
-                go_linux_amd64_versions.append(link['href'].lstrip('/dl/'))
+                go_linux_amd64_versions.append(link['href'].lstrip('/dl/go').rstrip('.linux-amd64.tar.gz'))
 
     return go_linux_amd64_versions
 
@@ -91,7 +91,7 @@ def get_go(url, location):
 # TODO: to update ENV variables
 # TODO: download and install desired version - get results from the
 # other two functions get_go_links, get_go_versions and combine via
-# argparser
+# argparser, print selected version in the print statement below
     """Download Go package for Linux (go1.15.2.linux-amd64)
 
     Args:
@@ -118,6 +118,7 @@ def main():
     go_versions = get_go_versions(go_dl_base_url)
     go_links = get_go_links(go_dl_base_url)
 
+    # TODO: pretty print the list items, embed in argparser
     print(f'Available Go versions for Linux:\n{go_versions}')
     print(f'Available Go download links for Linux packages:\n{go_links}')
 
