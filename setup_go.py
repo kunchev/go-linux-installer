@@ -9,7 +9,6 @@ Attributes:
 """
 
 # Work in progress...
-
 # pip3 -r install requirements.txt
 
 try:
@@ -33,6 +32,7 @@ chunk_size = 1024
 # TODO: implement argparser to get the current available Go versions
 # TODO: pass the results from the argparser desired version argument
 # to the installation function
+
 
 def get_go_versions(url):
 # TODO: call this function only when supplied argparse argument to list
