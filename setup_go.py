@@ -45,18 +45,18 @@ def get_go_versions(url):
     Returns:
         go_linux_amd64_versions: All Go versions available on the site
         go_linux_amd64_links: All Go links to versions available on the site
-        """
-        go_linux_amd64_versions = []
+    """
+    go_linux_amd64_versions = []
 
-	http = httplib2.Http()
-	status, response = http.request(url)
+    http = httplib2.Http()
+    status, response = http.request(url)
 	
-	for link in BeautifulSoup(response, parse_only=SoupStrainer('a'), features="html.parser"):
-            if link.has_attr('href'):
-                if 'linux-amd64' in link['href']:
-                    go_linux_amd64_versions.append(link['href'].lstrip('/dl/'))
+    for link in BeautifulSoup(response, parse_only=SoupStrainer('a'), features="html.parser"):
+        if link.has_attr('href'):
+            if 'linux-amd64' in link['href']:
+                go_linux_amd64_versions.append(link['href'].lstrip('/dl/'))
 
-	return go_linux_amd64_versions
+    return go_linux_amd64_versions
 
 
 def get_go_links(url):
