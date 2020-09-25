@@ -117,9 +117,12 @@ def get_go(url, location):
 def main():
     """Main function, entry point of program.
     """
-    parser = argparse.ArgumentParser(description='List available Go pakcages '
-                                                 'for Linux, install the '
-                                                 'selected package version.')
+    parser = argparse.ArgumentParser(description='List available Go packages '
+                                                 'for Linux on the official '
+                                                 'Go website. Install the '
+                                                 'selected package version '
+                                                 'from the list.')
+
     args = parser.parse_args()
     go_versions = get_go_versions(go_dl_base_url)
     go_links = get_go_links(go_dl_base_url)
