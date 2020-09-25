@@ -21,7 +21,6 @@ except ModuleNotFoundError as err:
     print('pip3 install -r requirements.txt')
     exit(err)
 
-
 # TODO: updated the names of the GO URLs variables
 go_dl_base_url = 'https://golang.org/dl/'
 go_url = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
@@ -35,12 +34,12 @@ chunk_size = 1024
 
 
 def get_go_versions(url):
-# TODO: call this function only when supplied argparse argument to list
-# the available versions
+    # TODO: call this function only when supplied argparse argument to list
+    # the available versions
     """Display all available Go packages for Linux
 
     Args:
-    	url (string): Base Go download URL
+        url (string): Base Go download URL
 
     Returns:
         go_linux_amd64_versions: All Go versions available on the site
@@ -50,7 +49,7 @@ def get_go_versions(url):
 
     http = httplib2.Http()
     status, response = http.request(url)
-	
+
     for link in BeautifulSoup(response, parse_only=SoupStrainer('a'), features="html.parser"):
         if link.has_attr('href'):
             if 'linux-amd64' in link['href']:
@@ -60,9 +59,9 @@ def get_go_versions(url):
 
 
 def get_go_links(url):
-# TODO: call this function only when specific version is required,
-# return result with link corresponding the package version selected
-# from the get_go_versions function
+    # TODO: call this function only when specific version is required,
+    # return result with link corresponding the package version selected
+    # from the get_go_versions function
     """Display all available Go download links with packages for Linux
 
     Args:
@@ -85,13 +84,13 @@ def get_go_links(url):
 
 
 def get_go(url, location):
-# TODO: this function downloads the currently defined package version
-# TODO: to unzip the package and install the source code
-# TODO: to create ~/go{src,pkg,bin} directories
-# TODO: to update ENV variables
-# TODO: download and install desired version - get results from the
-# other two functions get_go_links, get_go_versions and combine via
-# argparser, print selected version in the print statement below
+    # TODO: this function downloads the currently defined package version
+    # TODO: to unzip the package and install the source code
+    # TODO: to create ~/go{src,pkg,bin} directories
+    # TODO: to update ENV variables
+    # TODO: download and install desired version - get results from the
+    # other two functions get_go_links, get_go_versions and combine via
+    # argparser, print selected version in the print statement below
     """Download Go package for Linux (go1.15.2.linux-amd64)
 
     Args:
