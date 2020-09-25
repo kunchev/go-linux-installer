@@ -21,7 +21,7 @@ except ModuleNotFoundError as err:
     print('pip3 install -r requirements.txt')
     exit(err)
 
-# TODO: updated the names of the GO URLs variables
+# TODO: change the names of the variables with more proper ones
 go_dl_base_url: str = 'https://golang.org/dl/'
 go_url: str = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
 go_local: str = '/tmp/'
