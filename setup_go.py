@@ -38,10 +38,10 @@ def get_go_versions(url):
 # TODO: call this function only when supplied argparse argument to list
 # the available versions
     """Display all available Go packages for Linux
-	
+
     Args:
     	url (string): Base Go download URL
-	
+
     Returns:
         go_linux_amd64_versions: All Go versions available on the site
         go_linux_amd64_links: All Go links to versions available on the site
@@ -64,7 +64,7 @@ def get_go_links(url):
 # return resuit with link corresponding the package version selected
 # from the get_go_versions function
     """Display all available Go download links with packages for Linux
-	
+
     Args:
         url (string): Base Go download URL
 
@@ -80,7 +80,7 @@ def get_go_links(url):
         if link.has_attr('href'):
             if 'linux-amd64' in link['href']:
                 go_linux_amd64_links.append(url + link['href'].lstrip('/dl/'))
-	
+
     return go_linux_amd64_links
 
 
@@ -93,7 +93,7 @@ def get_go(url, location):
 # other two functions get_go_links, get_go_versions and combine via
 # argparser
     """Download Go package for Linux (go1.15.2.linux-amd64)
-	
+
     Args:
         url (string): URL with desired go package
         location (string): Local download folder on the filesystem
