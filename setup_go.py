@@ -46,7 +46,6 @@ def get_go_versions(url):
         go_linux_amd64_links: All Go links available to download
     """
     go_linux_amd64_versions = []
-
     http = httplib2.Http()
     status, response = http.request(url)
 
@@ -74,7 +73,6 @@ def get_go_links(url):
         go_linux_amd64_links: All Go links to versions available
     """
     go_linux_amd64_links = []
-
     http = httplib2.Http()
     status, response = http.request(url)
 
@@ -107,7 +105,6 @@ def get_go(url, location):
     filename = url.split('/')[-1]
 
     print(f'Downloading from {url}')
-
     with open(location + filename, 'wb') as f:
         for data in tqdm(iterable=r.iter_content(chunk_size=chunk_size),
                          total=total_size / chunk_size, unit='KB'):
