@@ -22,20 +22,20 @@ except ModuleNotFoundError as err:
     exit(err)
 
 # TODO: updated the names of the GO URLs variables
-go_dl_base_url = 'https://golang.org/dl/'
-go_url = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
-go_local = '/tmp/'
-chunk_size = 1024
+go_dl_base_url: str = 'https://golang.org/dl/'
+go_url: str = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
+go_local: str = '/tmp/'
+chunk_size: int = 1024
 
 
 # TODO: implement argparser to get the current available Go versions
 # TODO: pass the results from the argparser desired version argument
-# to the installation function
+#       to the installation function
 
 
 def get_go_versions(url):
-    # TODO: call this function only when supplied argparse argument to list
-    # the available versions
+    # TODO: call this function only when supplied argparse argument to
+    #       list the available versions
     """Display all available Go packages for Linux
 
     Args:
@@ -43,39 +43,43 @@ def get_go_versions(url):
 
     Returns:
         go_linux_amd64_versions: All Go versions available on the site
-        go_linux_amd64_links: All Go links to versions available on the site
+        go_linux_amd64_links: All Go links available to download
     """
     go_linux_amd64_versions = []
 
     http = httplib2.Http()
     status, response = http.request(url)
 
-    for link in BeautifulSoup(response, parse_only=SoupStrainer('a'), features="html.parser"):
+    assert isinstance(response, object)
+    for link in BeautifulSoup(response, parse_only=SoupStrainer('a'),
+                              features="html.parser"):
         if link.has_attr('href'):
             if 'linux-amd64' in link['href']:
-                go_linux_amd64_versions.append(link['href'].lstrip('/dl/go').rstrip('.linux-amd64.tar.gz'))
+                go_linux_amd64_versions.append(link['href'].lstrip(
+                    '/dl/go').rstrip('.linux-amd64.tar.gz'))
 
     return go_linux_amd64_versions
 
 
 def get_go_links(url):
     # TODO: call this function only when specific version is required,
-    # return result with link corresponding the package version selected
-    # from the get_go_versions function
+    #       return result with link corresponding the package version
+    #       selected from the get_go_versions function
     """Display all available Go download links with packages for Linux
 
     Args:
         url (string): Base Go download URL
 
     Returns:
-        go_linux_amd64_links: All Go links to versions available on the site
+        go_linux_amd64_links: All Go links to versions available
     """
     go_linux_amd64_links = []
 
     http = httplib2.Http()
     status, response = http.request(url)
 
-    for link in BeautifulSoup(response, parse_only=SoupStrainer('a'), features="html.parser"):
+    for link in BeautifulSoup(response, parse_only=SoupStrainer('a'),
+                              features="html.parser"):
         if link.has_attr('href'):
             if 'linux-amd64' in link['href']:
                 go_linux_amd64_links.append(url + link['href'].lstrip('/dl/'))
@@ -84,13 +88,14 @@ def get_go_links(url):
 
 
 def get_go(url, location):
-    # TODO: this function downloads the currently defined package version
+    # TODO: this function downloads the currently defined package ver.
     # TODO: to unzip the package and install the source code
     # TODO: to create ~/go{src,pkg,bin} directories
     # TODO: to update ENV variables
     # TODO: download and install desired version - get results from the
-    # other two functions get_go_links, get_go_versions and combine via
-    # argparser, print selected version in the print statement below
+    #       other two functions get_go_links, get_go_versions and
+    #       combine via argparser, print selected version in the print
+    #       statement below
     """Download Go package for Linux (go1.15.2.linux-amd64)
 
     Args:
@@ -111,7 +116,7 @@ def get_go(url, location):
     print(f'Download complete, file saved to {location + filename}')
 
 
-def main():
+def main() -> object:
     """Main function, entry point of program.
     """
     go_versions = get_go_versions(go_dl_base_url)
@@ -119,7 +124,7 @@ def main():
 
     # TODO: pretty print the list items, embed in argparser
     print(f'Available Go versions for Linux:\n{go_versions}')
-    print(f'Available Go download links for Linux packages:\n{go_links}')
+    print(f'Available Go download links for Linux:\n{go_links}')
 
     # Download Go version 15.2.linux-amd64
     get_go(go_url, go_local)
