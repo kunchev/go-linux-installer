@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-"""Download and insstall Go on Linux, list all versions.
+"""Download and install Go on Linux, list all versions.
 
 Attributes:
     chunk_size (int): Chunks size of the package, required for tqdm
@@ -22,7 +22,7 @@ except ModuleNotFoundError as err:
     exit(err)
 
 
-# TODO: updated the names of the GO URLs variabes
+# TODO: updated the names of the GO URLs variables
 go_dl_base_url = 'https://golang.org/dl/'
 go_url = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
 go_local = '/tmp/'
@@ -60,8 +60,8 @@ def get_go_versions(url):
 
 
 def get_go_links(url):
-# TODO: call this function only when speciffic version is required,
-# return resuit with link corresponding the package version selected
+# TODO: call this function only when specific version is required,
+# return result with link corresponding the package version selected
 # from the get_go_versions function
     """Display all available Go download links with packages for Linux
 
