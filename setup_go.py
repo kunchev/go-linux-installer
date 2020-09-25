@@ -70,18 +70,18 @@ def get_go_links(url):
 
     Returns:
         go_linux_amd64_links: All Go links to versions available on the site
-	"""
-	go_linux_amd64_links = []
+    """
+    go_linux_amd64_links = []
 
-	http = httplib2.Http()
-	status, response = http.request(url)
+    http = httplib2.Http()
+    status, response = http.request(url)
+
+    for link in BeautifulSoup(response, parse_only=SoupStrainer('a'), features="html.parser"):
+        if link.has_attr('href'):
+            if 'linux-amd64' in link['href']:
+                go_linux_amd64_links.append(url + link['href'].lstrip('/dl/'))
 	
-	for link in BeautifulSoup(response, parse_only=SoupStrainer('a'), features="html.parser"):
-            if link.has_attr('href'):
-                if 'linux-amd64' in link['href']:
-                    go_linux_amd64_links.append(url + link['href'].lstrip('/dl/'))
-	
-	return go_linux_amd64_links
+    return go_linux_amd64_links
 
 
 def get_go(url, location):
@@ -107,9 +107,9 @@ def get_go(url, location):
     with open(location + filename, 'wb') as f:
         for data in tqdm(iterable=r.iter_content(chunk_size=chunk_size),
                          total=total_size / chunk_size, unit='KB'):
-        f.write(data)
+            f.write(data)
 
-	print(f'Download complete, file saved to {location + filename}')
+    print(f'Download complete, file saved to {location + filename}')
 
 
 def main():
