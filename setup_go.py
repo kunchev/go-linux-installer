@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-"""Download and install Go on Linux, list all versions.
+"""Download and install Go on Linux, list all available versions.
 
 Attributes:
     chunk_size (int): Chunks size of the package, required for tqdm
@@ -9,7 +9,6 @@ Attributes:
 """
 
 # Work in progress...
-# pip3 -r install requirements.txt
 
 try:
     import argparse
@@ -21,6 +20,7 @@ try:
 except ModuleNotFoundError as err:
     print('pip3 install -r requirements.txt')
     exit(err)
+
 
 # TODO: change the names of the variables with more proper ones
 go_dl_base_url: str = 'https://golang.org/dl/'
