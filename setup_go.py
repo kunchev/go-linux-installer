@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
-"""Download and install Go on Linux, list all available versions.
+"""Download and install Go on Linux, list all available versions on the
+    Go website.
 
 Attributes:
     chunk_size (int): Chunks size of the package, required for tqdm
@@ -8,7 +9,7 @@ Attributes:
     go_url (str): URL with desired go package
 """
 
-# Work in progress...
+# work in progress...
 
 try:
     import argparse
