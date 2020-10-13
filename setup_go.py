@@ -28,10 +28,12 @@ go_url: str = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
 go_local: str = '/tmp/'
 chunk_size: int = 1024
 
-# TODO: Implement color print based on message type - green for ok status,
+# TODO: Implement color print based on message type - green for ok,
 #  red for error messages and blue for informational messages
+
 # TODO: Validate format of the input parameter for the Go version - must
-#  follow x.y, x.yy or x.yy.z where x y and z are digits from 0 to 9
+#  follow x.y, x.yy, x.y.z or x.yy.z pattern, where x y and z are digits
+#  0 to 9
 
 def check_exists_dl_folder(folderpath):
     """Check if the local download folder exists
