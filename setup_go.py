@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 """Download and install Go on Linux, list all available versions on the
-    Go website.
+   Go website
 
 Attributes:
     chunk_size (int): Chunks size of the package, required for tqdm
@@ -8,8 +8,10 @@ Attributes:
     go_local (str): Local download folder on the filesystem
     go_url (str): URL with desired go package
 """
+from typing import List, Any
 
 try:
+    import os
     import argparse
     import requests
     import httplib2
@@ -26,10 +28,23 @@ go_url: str = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
 go_local: str = '/tmp/'
 chunk_size: int = 1024
 
+# TODO: Implement color print based on message type - green for ok status,
+#  red for error messages and blue for informational messages
+# TODO: Validate format of the input parameter for the Go version - must
+#  follow x.y, x.yy or x.yy.z where x y and z are digits from 0 to 9
+
+def check_exists_dl_folder(folderpath):
+    """Check if the local download folder exists
+
+    Args:
+        folderpath (string): Path to the download folder
+    """
+    if not os.path.exists(folderpath):
+        print(f'The desired download folder {folderpath} does not exist')
+        exit(1)
+
 
 def get_go_versions(url):
-    # TODO: call this function only when supplied argparse argument to
-    #       list the available versions
     """Display all available Go packages for Linux
 
     Args:
@@ -81,29 +96,26 @@ def get_go_link(url, version):
 
     Args:
         url (string): Base Go download URL
-        version (int): Desired Go version in format x.yy.z
+        version (int): Desired Go version in formats x.y, x.y.z, x.yy.z
 
     Returns:
-        go_linux_amd64_dl_link: Go link with desired version to be installed
+        go_linux_amd64_dl_link: Go link with desired version selected
     """
-    go_linux_amd64_dl_link = []
+    go_linux_amd64_dl_link: list[Any] = []
     http = httplib2.Http()
     status, response = http.request(url)
 
     for link in BeautifulSoup(response, parse_only=SoupStrainer('a'),
                               features="html.parser"):
         if link.has_attr('href'):
-            if 'linux-amd64' in link['href']:
-                if version in link['href']:
-                    # go_linux_amd64_dl_link.append(url + link[
-                    # 'href'].lstrip('/dl/'))
-                    go_linux_amd64_dl_link = url + link['href'].lstrip('/dl/')
+            if 'linux-amd64' in link['href'] and version in link['href']:
+                go_linux_amd64_dl_link = url + link['href'].lstrip('/dl/')
 
     return go_linux_amd64_dl_link
 
 
 def get_go(url, location):
-    # TODO: this function downloads the currently defined package ver.
+    # TODO: this function downloads the currently defined package ver
     # TODO: unzip the package and install the source code
     # TODO: create ~/go{src,pkg,bin} directories
     # TODO: to update ENV variables
@@ -117,7 +129,6 @@ def get_go(url, location):
     total_size = int(r.headers['content-length'])
     filename = url.split('/')[-1]
 
-    print(f'Downloading from {url}')
     with open(location + filename, 'wb') as f:
         for data in tqdm(iterable=r.iter_content(chunk_size=chunk_size),
                          total=total_size / chunk_size, unit='KB'):
@@ -127,7 +138,7 @@ def get_go(url, location):
 
 
 def main():
-    """Main function, entry point of program.
+    """Main function, entry point of program
     """
     download_url = None
     desired_version = None
@@ -167,6 +178,8 @@ def main():
 
     # Download and install the desired Go version
     if args.action == 'installgo':
+        # First check if the download folder is present
+        check_exists_dl_folder(go_local)
         if args.version is not None:
             desired_version = args.version
             download_url = get_go_link(go_dl_base_url, desired_version)
