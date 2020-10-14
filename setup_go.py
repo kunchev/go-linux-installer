@@ -22,6 +22,8 @@ __license__ = 'MIT'
 
 import os
 from typing import List, Any
+from pathlib import Path
+from functools import partial
 
 try:
     import argparse
@@ -39,6 +41,9 @@ go_dl_base_url: str = 'https://golang.org/dl/'
 go_url: str = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
 go_local: str = '/tmp/'
 chunk_size: int = 1024
+go_home: str = str(Path.home()) + '/go/'
+go_folders: tuple = ('src', 'pkg', 'bin')
+go_install_home: str = '/usr/local'
 
 
 # TODO: Implement color print based on message type - green for ok,
@@ -131,10 +136,7 @@ def get_go_link(url, version):
 
 
 def get_go(url, location):
-    # TODO: this function downloads the currently defined package ver
     # TODO: unzip the package and install the source code
-    # TODO: create ~/go{src,pkg,bin} directories
-    # TODO: to update ENV variables
     """Download and install desired Go package version for Linux
 
     Args:
@@ -144,13 +146,42 @@ def get_go(url, location):
     r = requests.get(url, stream=True)
     total_size = int(r.headers['content-length'])
     filename = url.split('/')[-1]
+    tar_path = location + filename
 
+    # download the desired Go archive
     with open(location + filename, 'wb') as f:
         for data in tqdm(iterable=r.iter_content(chunk_size=chunk_size),
                          total=total_size / chunk_size, unit='KB'):
             f.write(data)
+    print(f'Download complete, archive saved to {tar_path}')
 
-    print(f'Download complete, file saved to {location + filename}')
+    # extract the downloaded archive
+    # TODO: check if go installed - if /usr/local/go is there as well as the
+    #  binary file in the directory, make if then else from the lines below
+    if os.path.exists('/usr/local/go'):
+        exit('go is installed')
+    print(f'Extracting the archive contents from {tar_path} and '
+          f'installing Go in /usr/local/go/, make sure that your user is in '
+          f'the sudoers list')
+    try:
+        os.system(f'sudo tar -C {go_install_home} -xzf {tar_path}')
+    except IOError as e:
+        print(f'Error {e}, could not open {tar_path}')
+        exit(1)
+
+
+def ensure_go_home(root_dir, subfolders):
+    # TODO: to update ENV variables
+    """Create go folders /home/<user>/go/{src,pkg,bin}
+
+    Args:
+        root_dir: /home/<user>/go/
+        subfolders: src, pkg, bin (provided in set)
+    """
+    concat_path = partial(os.path.join, root_dir)
+    mkdirs = partial(os.makedirs, exist_ok=True)
+    for path in map(concat_path, subfolders):
+        mkdirs(path)
 
 
 def main():
@@ -204,9 +235,10 @@ def main():
             print('Please provide Go version as a value: 1.15.2')
             exit(1)
         print(
-            f'You selected Go version {desired_version}, it will be '
-            f'downloaded from {download_url}')
+            f'Selected Go version: {desired_version}, downloading Go '
+            f'package from: {download_url}')
         get_go(download_url, go_local)
+        ensure_go_home(go_home, go_folders)
 
 
 if __name__ == '__main__':
