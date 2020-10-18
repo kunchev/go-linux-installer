@@ -148,14 +148,14 @@ def get_go(url, location):
     filename = url.split('/')[-1]
     tar_path = location + filename
 
-    # download the desired Go archive
+    # Download the desired Go archive
     with open(location + filename, 'wb') as f:
         for data in tqdm(iterable=r.iter_content(chunk_size=chunk_size),
                          total=total_size / chunk_size, unit='KB'):
             f.write(data)
     print(f'Download complete, archive saved to {tar_path}')
 
-    # extract the downloaded archive
+    # Extract the downloaded archive
     # TODO: check if go installed - if /usr/local/go is there as well as the
     #  binary file in the directory, make if then else from the lines below
     if os.path.exists('/usr/local/go'):
@@ -226,7 +226,7 @@ def main():
 
     # Download and install the desired Go version
     if args.action == 'installgo':
-        # First check if the download folder is present
+        # First check if the download folder is present - 'go_local'
         check_exists_dl_folder(go_local)
         if args.version is not None:
             desired_version = args.version
