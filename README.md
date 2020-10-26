@@ -21,4 +21,5 @@ Screenshot:
 ```
 python3 setup_go.py -a installgo -v 1.15.3
 ```
+![Screenshot](progress_bar.png)
 ![Screenshot](setup_go.png)
