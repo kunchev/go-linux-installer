@@ -4,15 +4,15 @@
 """Download and install Go on Linux, list all available versions on the
 Go website, select version to install and pass it as an argument
 
-- Go is an open source programming language
+- Go is an open source programming language:
 https://golang.org/doc/copyright.html
 
 - Linux is a family of open-source Unix-like operating systems based on
-the Linux kernel
+the Linux kernel:
 https://www.kernel.org/category/about.html
 
 - Python is an interpreted, high-level, dynamically typed,
-garbage-collected and general-purpose programming language
+garbage-collected and general-purpose programming language:
 https://en.wikipedia.org/wiki/Python_Software_Foundation_License
 https://docs.python.org/3/license.html
 
