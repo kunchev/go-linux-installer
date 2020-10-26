@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Download and install Go on Linux, list all available versions on the
-   Go website, select version to install and pass it as an argument
+Go website, select version to install and pass it as an argument
 
 Attributes:
     chunk_size (int): Chunks size of the package, required for tqdm
@@ -13,7 +13,7 @@ Attributes:
 
 
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 __maintainer__ = 'Petyo Kunchev'
 __email__ = 'ptkunchev@gmail.com'
 __status__ = 'Development'
@@ -239,8 +239,8 @@ def main():
             f'package from: {download_url}')
         setup_start = time.perf_counter()
         get_go(download_url, go_local)
-        setup_end = time.perf_counter()
         ensure_go_home(go_home, go_folders)
+        setup_end = time.perf_counter()
         print(f'Setup completed in {round(setup_end - setup_start, 2)} second('
               f's)')
 
