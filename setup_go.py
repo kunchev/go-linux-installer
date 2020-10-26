@@ -13,7 +13,7 @@ Attributes:
 
 
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 __maintainer__ = 'Petyo Kunchev'
 __email__ = 'ptkunchev@gmail.com'
 __status__ = 'Development'
@@ -21,6 +21,7 @@ __license__ = 'MIT'
 
 
 import os
+import time
 from typing import List, Any
 from pathlib import Path
 from functools import partial
@@ -136,8 +137,8 @@ def get_go_link(url, version):
 
 
 def get_go(url, location):
-    # TODO: unzip the package and install the source code
-    """Download and install desired Go package version for Linux
+    """Download and install desired Go package version for Linux, untar
+    the downloaded package and place the contents in /usr/local/go
 
     Args:
         url (string): URL with desired go package
@@ -148,16 +149,15 @@ def get_go(url, location):
     filename = url.split('/')[-1]
     tar_path = location + filename
 
-    # Download the desired Go archive
+    # 1. Download the desired Go archive
     with open(location + filename, 'wb') as f:
         for data in tqdm(iterable=r.iter_content(chunk_size=chunk_size),
                          total=total_size / chunk_size, unit='KB'):
             f.write(data)
     print(f'Download complete, archive saved to {tar_path}')
 
-    # Extract the downloaded archive
-    # TODO: check if go installed - if /usr/local/go is there as well as the
-    #  binary file in the directory, make if then else from the lines below
+    # 2. Extract the downloaded archive,
+    # check if Go is installed - exit if /usr/local/go is present
     if os.path.exists('/usr/local/go'):
         exit('go is installed')
     print(f'Extracting the archive contents from {tar_path} and '
@@ -237,8 +237,12 @@ def main():
         print(
             f'Selected Go version: {desired_version}, downloading Go '
             f'package from: {download_url}')
+        setup_start = time.perf_counter()
         get_go(download_url, go_local)
+        setup_end = time.perf_counter()
         ensure_go_home(go_home, go_folders)
+        print(f'Setup completed in {round(setup_end - setup_start, 2)} second('
+              f's)')
 
 
 if __name__ == '__main__':
