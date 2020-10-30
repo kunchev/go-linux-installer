@@ -106,6 +106,7 @@ def get_go_versions(url):
 
 def get_go_links(url):
     """Display all available Go download links with packages for Linux
+    on the Go website
 
     Args:
         url (string): Base Go download URL

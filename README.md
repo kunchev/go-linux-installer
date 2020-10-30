@@ -1,5 +1,5 @@
 # go-linux-installer
-Install desired Go version on Linux
+Install the desired Go version on Linux
 
 Usage:  
 ```
