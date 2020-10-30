@@ -184,7 +184,7 @@ def get_go(url, location):
 
 
 def ensure_go_home(root_dir, subfolders):
-    # TODO: to update ENV variables
+    # TODO: to update ENV .bashrc or .zshrc, /etc/profile
     """Create go folders /home/<user>/go/{src,pkg,bin}
 
     Args:
