@@ -237,7 +237,7 @@ def main():
         print(f'Available Go download links for Linux:\n{go_links}')
         exit(0)
 
-    # Download and install the desired Go version
+    # Download and install the desired Go version from the Go website
     if args.action == 'installgo':
         # First check if the download folder is present - 'go_local'
         check_exists_dl_folder(go_local)
