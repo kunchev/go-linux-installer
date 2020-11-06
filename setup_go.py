@@ -284,11 +284,11 @@ def main():
         setup_start = time.perf_counter()
         get_go(download_url, go_local)
         ensure_go_home(go_home, go_folders)
+        # update_env_files()
         setup_end = time.perf_counter()
         print(f'Setup completed in {round(setup_end - setup_start, 2)} second('
               f's)')
 
 
 if __name__ == '__main__':
-    update_env_files()
     main()
