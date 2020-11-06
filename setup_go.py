@@ -52,7 +52,7 @@ except ModuleNotFoundError as err:
 
 
 go_dl_base_url: str = 'https://golang.org/dl/'
-go_url: str = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
+# go_url: str = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
 go_local: str = '/tmp/'
 chunk_size: int = 1024
 go_home: str = str(Path.home()) + '/go/'
@@ -228,14 +228,22 @@ def main():
 
     # List all available Go versions on the Go website
     if args.action == 'listgoversions':
-        go_versions = get_go_versions(go_dl_base_url)
-        print(f'Available Go versions for Linux:\n{go_versions}')
+        go_versions: object = get_go_versions(go_dl_base_url)
+        print('Available Go versions for Linux:')
+        # start from 1 - not 0 element, because the value of 0 is
+        # duplicate of 1 (1.15 1.15 - latest version is parsed twice)
+        for version in range(1, len(go_versions)):
+            print('Go ver:', go_versions[version])
         exit(0)
 
     # List all available Go download links on the Go website
     if args.action == 'listgolinks':
         go_links = get_go_links(go_dl_base_url)
-        print(f'Available Go download links for Linux:\n{go_links}')
+        print('Available Go download links for Linux:')
+        # start from 1st - not 0 element, because the value of 0 is
+        # duplicate of 1
+        for link in range(1, len(go_links)):
+            print('Download link for this Go ver:', go_links[link])
         exit(0)
 
     # Download and install the desired Go version from the Go website
