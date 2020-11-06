@@ -244,7 +244,7 @@ def main():
         # start from 1st - not 0 element, because the value of 0 is
         # duplicate of 1
         for link in range(1, len(go_links)):
-            print('Download link for this Go ver:', go_links[link])
+            print('Download link for Go ver:', go_links[link])
         exit(0)
 
     # Download and install the desired Go version from the Go website
