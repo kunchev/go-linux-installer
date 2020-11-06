@@ -228,7 +228,7 @@ def main():
 
     # List all available Go versions on the Go website
     if args.action == 'listgoversions':
-        go_versions: object = get_go_versions(go_dl_base_url)
+        go_versions: list = get_go_versions(go_dl_base_url)
         print('Available Go versions for Linux:')
         # start from 1 - not 0 element, because the value of 0 is
         # duplicate of 1 (1.15 1.15 - latest version is parsed twice)
@@ -238,7 +238,7 @@ def main():
 
     # List all available Go download links on the Go website
     if args.action == 'listgolinks':
-        go_links = get_go_links(go_dl_base_url)
+        go_links: list = get_go_links(go_dl_base_url)
         print('Available Go download links for Linux:')
         # start from 1st - not 0 element, because the value of 0 is
         # duplicate of 1
