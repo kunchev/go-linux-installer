@@ -36,10 +36,10 @@ __license__ = 'MIT'
 
 
 import os
-from os import environ
 import time
-from typing import List, Any
+from os import environ
 from pathlib import Path
+from typing import List, Any
 from functools import partial
 
 try:
