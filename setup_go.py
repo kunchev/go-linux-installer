@@ -36,6 +36,7 @@ __license__ = 'MIT'
 
 
 import os
+from os import environ
 import time
 from typing import List, Any
 from pathlib import Path
@@ -199,6 +200,26 @@ def ensure_go_home(root_dir, subfolders):
         mkdirs(path)
 
 
+def update_env_files():
+    # TODO: to update ENV .bashrc or .zshrc, /etc/profile
+    """Update ENV .bashrc or .zshrc, /etc/profile
+    """
+    glob_profile_config: str = '/etc/profile'
+    current_shell: str = environ['SHELL']
+    user_home: str = str(Path.home()) + '/'
+
+    if 'zsh' in current_shell:
+        shell_rc: str = user_home + '.zshrc'
+        print(f'Current shell config: {shell_rc}')
+    elif 'bash' in current_shell:
+        shell_rc: str = user_home + '.bashrc'
+        print(f'Current shell config: {shell_rc}')
+    else:
+        print(f'Shell config file is unknown')
+
+    print(f'Global shell config: {glob_profile_config}')
+
+
 def main():
     """Main function, entry point of program, argparser is used here in
     combination with the functions defined in this module
@@ -269,4 +290,5 @@ def main():
 
 
 if __name__ == '__main__':
+    update_env_files()
     main()
