@@ -21,12 +21,14 @@ Attributes:
     chunk_size (int): Chunks size of the package, required for tqdm
     go_dl_base_url (str): Base Go download URL
     go_local (str): Local download folder on the filesystem
-    go_url (str): URL with desired go package
+    go_home (str): /home/user/go (home go folder for projects)
+    go_folders (tuple): /home/user/go/('src', 'pkg', 'bin')
+    go_install_home (str): '/usr/local' (go installation folder)
 """
 
 
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 __maintainer__ = 'Petyo Kunchev'
 __email__ = 'ptkunchev@gmail.com'
 __status__ = 'Development'
@@ -52,7 +54,6 @@ except ModuleNotFoundError as err:
 
 
 go_dl_base_url: str = 'https://golang.org/dl/'
-# go_url: str = 'https://golang.org/dl/go1.15.2.linux-amd64.tar.gz'
 go_local: str = '/tmp/'
 chunk_size: int = 1024
 go_home: str = str(Path.home()) + '/go/'
