@@ -139,7 +139,7 @@ def get_go_link(url, version):
     Returns:
         go_linux_amd64_dl_link: Go link with desired version selected
     """
-    go_linux_amd64_dl_link: list[Any] = []
+    go_linux_amd64_dl_link: List[Any] = []
     http = httplib2.Http()
     status, response = http.request(url)
 
