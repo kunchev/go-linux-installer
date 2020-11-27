@@ -30,7 +30,6 @@ Attributes:
 __author__ = 'Petyo Kunchev'
 __version__ = '1.0.4'
 __maintainer__ = 'Petyo Kunchev'
-__email__ = 'ptkunchev@gmail.com'
 __status__ = 'Development'
 __license__ = 'MIT'
 
