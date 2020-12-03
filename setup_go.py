@@ -1,7 +1,8 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""Download and install Go on Linux, list all available versions on the
+"""
+Download and install Go on Linux, list all available versions on the
 Go website, select version to install and pass it as an argument
 
 - Go is an open source programming language:
@@ -48,7 +49,7 @@ try:
     from bs4 import BeautifulSoup
     from bs4 import SoupStrainer
 except ModuleNotFoundError as err:
-    print('pip3 install -r requirements.txt')
+    print('run: \'pip3 install -r requirements.txt\'')
     exit(err)
 
 go_dl_base_url: str = 'https://golang.org/dl/'
