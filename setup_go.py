@@ -28,7 +28,7 @@ Attributes:
 """
 
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.6'
+__version__ = '1.0.7'
 __maintainer__ = 'Petyo Kunchev'
 __status__ = 'Development'
 __license__ = 'MIT'
