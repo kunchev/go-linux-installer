@@ -27,12 +27,15 @@ Attributes:
     go_install_home (str): '/usr/local' (go installation folder)
 """
 
+
 __author__ = 'Petyo Kunchev'
 __version__ = '1.0.7'
 __maintainer__ = 'Petyo Kunchev'
 __status__ = 'Development'
 __license__ = 'MIT'
 
+
+# Imports
 import os
 import time
 import subprocess
@@ -52,6 +55,8 @@ except ModuleNotFoundError as err:
     print('run: \'pip3 install -r requirements.txt\'')
     exit(err)
 
+
+# Global variables
 go_dl_base_url: str = 'https://golang.org/dl/'
 go_local: str = '/tmp/'
 chunk_size: int = 1024
