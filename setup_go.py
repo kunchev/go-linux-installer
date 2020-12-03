@@ -26,16 +26,15 @@ Attributes:
     go_install_home (str): '/usr/local' (go installation folder)
 """
 
-
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.4'
+__version__ = '1.0.6'
 __maintainer__ = 'Petyo Kunchev'
 __status__ = 'Development'
 __license__ = 'MIT'
 
-
 import os
 import time
+import subprocess
 from os import environ
 from pathlib import Path
 from typing import List, Any
@@ -52,14 +51,13 @@ except ModuleNotFoundError as err:
     print('pip3 install -r requirements.txt')
     exit(err)
 
-
 go_dl_base_url: str = 'https://golang.org/dl/'
 go_local: str = '/tmp/'
 chunk_size: int = 1024
 go_home: str = str(Path.home()) + '/go/'
 go_folders: tuple = ('src', 'pkg', 'bin')
 go_install_home: str = '/usr/local'
-
+current_shell: str = environ['SHELL']
 
 # TODO: Implement color print based on message type - green for ok,
 #  red for error messages and blue for informational messages
@@ -68,9 +66,13 @@ go_install_home: str = '/usr/local'
 #  follow x.y, x.yy, x.y.z or x.yy.z pattern, where x y and z are digits
 #  0 to 9
 
+# TODO: Add argparse argument '--action checkgo' to check whether go is
+#  already installed and if so - print the currently installed version
+
 
 def check_exists_dl_folder(folderpath):
-    """Check if the local download folder exists
+    """
+    Check if the local download folder exists
 
     Args:
         folderpath (string): Path to the download folder
@@ -81,7 +83,8 @@ def check_exists_dl_folder(folderpath):
 
 
 def get_go_versions(url):
-    """Display all available Go packages for Linux
+    """
+    Display all available Go packages for Linux
 
     Args:
         url (string): Base Go download URL
@@ -106,7 +109,8 @@ def get_go_versions(url):
 
 
 def get_go_links(url):
-    """Display all available Go download links with packages for Linux
+    """
+    Display all available Go download links with packages for Linux
     on the Go website
 
     Args:
@@ -129,7 +133,8 @@ def get_go_links(url):
 
 
 def get_go_link(url, version):
-    """Call this function only when specific version is required
+    """
+    Call this function only when specific version is required
 
     Args:
         url (string): Base Go download URL
@@ -152,7 +157,8 @@ def get_go_link(url, version):
 
 
 def get_go(url, location):
-    """Download and install desired Go package version for Linux, untar
+    """
+    Download and install desired Go package version for Linux, untar
     the downloaded package and place the contents in /usr/local/go
 
     Args:
@@ -186,7 +192,8 @@ def get_go(url, location):
 
 
 def ensure_go_home(root_dir, subfolders):
-    """Create go folders /home/<user>/go/{src,pkg,bin}
+    """
+    Create go folders /home/<user>/go/{src,pkg,bin}
 
     Args:
         root_dir: /home/<user>/go/
@@ -198,28 +205,48 @@ def ensure_go_home(root_dir, subfolders):
         mkdirs(path)
 
 
-def update_env_files():
-    # TODO: to update ENV .bashrc or .zshrc, /etc/profile with gopath
-    """Update ENV .bashrc or .zshrc, /etc/profile
+def append_gopath_to_env(envfile: str):
+    """
+    Append the go path to the user's shell profile
+
+    Args:
+        envfile (str): path to the env file, auto generated
+    """
+    # open the current active shell source file and append the go path
+    print('Appending go path to $PATH')
+    with open(envfile, 'a') as f:
+        f.write('\n' + 'export PATH=$PATH:/usr/local/go/bin' + '\n')
+        f.close()
+
+    # source the updated envfile
+    subprocess.call(['.', envfile], shell=True)
+
+
+def handle_os_environment():
+    """
+    Update ENV .bashrc or .zshrc, /etc/profile
     """
     glob_profile_config: str = '/etc/profile'
-    current_shell: str = environ['SHELL']
     user_home: str = str(Path.home()) + '/'
 
     if 'zsh' in current_shell:
         shell_rc: str = user_home + '.zshrc'
         print(f'Current shell config: {shell_rc}')
+        append_gopath_to_env(shell_rc)
     elif 'bash' in current_shell:
         shell_rc: str = user_home + '.bashrc'
         print(f'Current shell config: {shell_rc}')
+        append_gopath_to_env(shell_rc)
     else:
         print(f'Shell config file is unknown')
 
     print(f'Global shell config: {glob_profile_config}')
+    print('Verify installation by running: \'go version\' from your terminal')
 
 
 def main():
-    """Main function, entry point of program, argparser is used here in
+    """
+    Main function, entry point of program, argparser is used here in
     combination with the functions defined in this module
     """
     download_url = None
@@ -282,7 +309,7 @@ def main():
         setup_start = time.perf_counter()
         get_go(download_url, go_local)
         ensure_go_home(go_home, go_folders)
-        update_env_files()
+        handle_os_environment()
         setup_end = time.perf_counter()
         print(f'Setup completed in {round(setup_end - setup_start, 2)} second('
               f's)')
