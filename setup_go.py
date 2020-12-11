@@ -28,6 +28,8 @@ Attributes:
 """
 
 
+# TODO: Implement a separate function for the argparse logic
+
 __author__ = 'Petyo Kunchev'
 __version__ = '1.0.7'
 __maintainer__ = 'Petyo Kunchev'
