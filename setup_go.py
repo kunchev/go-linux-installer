@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
 """
 Download and install Go on Linux, list all available versions on the
 Go website, select version to install and pass it as an argument
@@ -30,8 +31,9 @@ Attributes:
 
 # TODO: Implement a separate function for the argparse logic
 
+
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.7'
+__version__ = '1.0.8'
 __maintainer__ = 'Petyo Kunchev'
 __status__ = 'Development'
 __license__ = 'MIT'
@@ -266,7 +268,8 @@ def main():
                                                  'from the list.')
     parser.add_argument('--action', '-a', metavar='<action>',
                         choices=['listgoversions', 'listgolinks', 'installgo'],
-                        action='store', dest="action", default="listgoversions",
+                        action='store', dest="action",
+                        default="listgoversions",
                         help='[listgoversions, listgolinks, installgo] - the '
                              'action that will be taken. "listgoversions" '
                              'will list all available Go versions for Linux '
@@ -319,8 +322,7 @@ def main():
         ensure_go_home(go_home, go_folders)
         handle_os_environment()
         setup_end = time.perf_counter()
-        print(f'Setup completed in {round(setup_end - setup_start, 2)} second('
-              f's)')
+        print(f'Completed in {round(setup_end - setup_start, 2)} second(s)')
 
 
 if __name__ == '__main__':
