@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 
@@ -30,16 +30,24 @@ Attributes:
 
 
 # TODO: Implement a separate function for the argparse logic
+# TODO: Implement color print based on message type - green for ok,
+#  red for error messages and blue for informational messages
+
+# TODO: Validate format of the input parameter for the Go version - must
+#  follow x.y, x.yy, x.y.z or x.yy.z pattern, where x y and z are digits
+#  0 to 9
+
+# TODO: Add argparse argument '--action checkgo' to check whether go is
+#  already installed and if so - print the currently installed version
 
 
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.8'
+__version__ = '1.0.9'
 __maintainer__ = 'Petyo Kunchev'
 __status__ = 'Development'
 __license__ = 'MIT'
 
 
-# Imports
 import os
 import time
 import subprocess
@@ -60,7 +68,6 @@ except ModuleNotFoundError as err:
     exit(err)
 
 
-# Global variables
 go_dl_base_url: str = 'https://golang.org/dl/'
 go_local: str = '/tmp/'
 chunk_size: int = 1024
@@ -68,16 +75,6 @@ go_home: str = str(Path.home()) + '/go/'
 go_folders: tuple = ('src', 'pkg', 'bin')
 go_install_home: str = '/usr/local'
 current_shell: str = environ['SHELL']
-
-# TODO: Implement color print based on message type - green for ok,
-#  red for error messages and blue for informational messages
-
-# TODO: Validate format of the input parameter for the Go version - must
-#  follow x.y, x.yy, x.y.z or x.yy.z pattern, where x y and z are digits
-#  0 to 9
-
-# TODO: Add argparse argument '--action checkgo' to check whether go is
-#  already installed and if so - print the currently installed version
 
 
 def check_exists_dl_folder(folderpath):
@@ -248,7 +245,7 @@ def handle_os_environment():
         print(f'Current shell config: {shell_rc}')
         append_gopath_to_env(shell_rc)
     else:
-        print(f'Shell config file is unknown')
+        print('Shell config file is unknown')
 
     print(f'Global shell config: {glob_profile_config}')
     print('Verify installation by running: \'go version\' from your terminal')
@@ -288,8 +285,9 @@ def main():
     if args.action == 'listgoversions':
         go_versions: list = get_go_versions(go_dl_base_url)
         print('Available Go versions for Linux:')
-        # start from 1 - not 0 element, because the value of 0 is
-        # duplicate of 1 (1.15 1.15 - latest version is parsed twice)
+        # start from the second (1), not first (0) element, because the
+        # value of the first (0) can have duplicates - 1.15 1.15 gets
+        # parsed twice
         for version in range(1, len(go_versions)):
             print('Go ver:', go_versions[version])
         exit(0)
@@ -298,8 +296,9 @@ def main():
     if args.action == 'listgolinks':
         go_links: list = get_go_links(go_dl_base_url)
         print('Available Go download links for Linux:')
-        # start from 1st - not 0 element, because the value of 0 is
-        # duplicate of 1
+        # start from the second (1), not first (0) element, because the
+        # value value of the first (0) can have duplicates with the
+        # second (1) element
         for link in range(1, len(go_links)):
             print('Download link for Go ver:', go_links[link])
         exit(0)
