@@ -4,7 +4,7 @@
 
 """
 Download and install Go on Linux, list all available versions on the
-Go website, select version to install and pass it as an argument
+Go website, select version to install and pass it as an argument.
 
 - Go is an open source programming language:
 https://golang.org/doc/copyright.html
@@ -42,11 +42,10 @@ Attributes:
 
 
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.9'
+__version__ = '1.0.10'
 __maintainer__ = 'Petyo Kunchev'
 __status__ = 'Development'
 __license__ = 'MIT'
-
 
 import os
 import time
@@ -64,9 +63,7 @@ try:
     from bs4 import BeautifulSoup
     from bs4 import SoupStrainer
 except ModuleNotFoundError as err:
-    print('run: \'pip3 install -r requirements.txt\'')
-    exit(err)
-
+    exit(f'Error: {err}, run \'pip3 install -r requirements.txt\'')
 
 go_dl_base_url: str = 'https://golang.org/dl/'
 go_local: str = '/tmp/'
@@ -79,7 +76,7 @@ current_shell: str = environ['SHELL']
 
 def check_exists_dl_folder(folderpath):
     """
-    Check if the local download folder exists
+    Check if the local download folder exists.
 
     Args:
         folderpath (string): Path to the download folder
@@ -91,14 +88,13 @@ def check_exists_dl_folder(folderpath):
 
 def get_go_versions(url):
     """
-    Display all available Go packages for Linux
+    Display all available Go packages for Linux.
 
     Args:
         url (string): Base Go download URL
 
     Returns:
         go_linux_amd64_versions: All Go versions available on the site
-        go_linux_amd64_links: All Go links available to download
     """
     go_linux_amd64_versions = []
     http = httplib2.Http()
@@ -118,13 +114,13 @@ def get_go_versions(url):
 def get_go_links(url):
     """
     Display all available Go download links with packages for Linux
-    on the Go website
+    on the Go website.
 
     Args:
         url (string): Base Go download URL
 
     Returns:
-        go_linux_amd64_links: All Go links to versions available
+        go_linux_amd64_links: All Go links available to download
     """
     go_linux_amd64_links = []
     http = httplib2.Http()
@@ -141,7 +137,7 @@ def get_go_links(url):
 
 def get_go_link(url, version):
     """
-    Call this function only when specific version is required
+    Call this function only when specific version is required.
 
     Args:
         url (string): Base Go download URL
@@ -166,7 +162,7 @@ def get_go_link(url, version):
 def get_go(url, location):
     """
     Download and install desired Go package version for Linux, untar
-    the downloaded package and place the contents in /usr/local/go
+    the downloaded package and place the contents in /usr/local/go.
 
     Args:
         url (string): URL with desired go package
@@ -200,7 +196,7 @@ def get_go(url, location):
 
 def ensure_go_home(root_dir, subfolders):
     """
-    Create go folders /home/<user>/go/{src,pkg,bin}
+    Create go folders /home/<user>/go/{src,pkg,bin}.
 
     Args:
         root_dir: /home/<user>/go/
@@ -214,7 +210,7 @@ def ensure_go_home(root_dir, subfolders):
 
 def append_gopath_to_env(envfile: str):
     """
-    Append the go path to the user's shell profile
+    Append the go path to the user's shell profile.
 
     Args:
         envfile (str): path to the env file, auto generated
@@ -231,7 +227,7 @@ def append_gopath_to_env(envfile: str):
 
 def handle_os_environment():
     """
-    Update ENV .bashrc or .zshrc, /etc/profile
+    Update ENV .bashrc or .zshrc, '/etc/profile'.
     """
     glob_profile_config: str = '/etc/profile'
     user_home: str = str(Path.home()) + '/'
@@ -254,7 +250,7 @@ def handle_os_environment():
 def main():
     """
     Main function, entry point of program, argparser is used here in
-    combination with the functions defined in this module
+    combination with the functions defined in this module.
     """
     download_url = None
     desired_version = None
