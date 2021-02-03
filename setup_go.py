@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 """
 Download and install Go on Linux, list all available versions on the
 Go website, select version to install and pass it as an argument.
@@ -28,7 +27,6 @@ Attributes:
     go_install_home (str): '/usr/local' (go installation folder)
 """
 
-
 # TODO: Implement a separate function for the argparse logic
 # TODO: Implement color print based on message type - green for ok,
 #  red for error messages and blue for informational messages
@@ -39,7 +37,6 @@ Attributes:
 
 # TODO: Add argparse argument '--action checkgo' to check whether go is
 #  already installed and if so - print the currently installed version
-
 
 __author__ = 'Petyo Kunchev'
 __version__ = '1.0.10'
