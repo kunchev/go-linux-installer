@@ -27,7 +27,7 @@ Attributes:
     go_install_home (str): '/usr/local' (go installation folder)
 """
 
-# TODO: Implement a separate function for the argparse logic
+# TODO: Implement a separate function for the argparse with return
 # TODO: Implement color print based on message type - green for ok,
 #  red for error messages and blue for informational messages
 
@@ -39,7 +39,7 @@ Attributes:
 #  already installed and if so - print the currently installed version
 
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.10'
+__version__ = '1.0.11'
 __maintainer__ = 'Petyo Kunchev'
 __status__ = 'Development'
 __license__ = 'MIT'
@@ -61,6 +61,7 @@ try:
     from bs4 import SoupStrainer
 except ModuleNotFoundError as err:
     exit(f'Error: {err}, run \'pip3 install -r requirements.txt\'')
+
 
 go_dl_base_url: str = 'https://golang.org/dl/'
 go_local: str = '/tmp/'
